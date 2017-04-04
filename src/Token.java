@@ -9,7 +9,9 @@ public class Token {
     private int pRead;
     //private ArrayList<> inf;
 
+    public Token(){
 
+    }
     public Token(String idToken, String lexema, int linha, int pRead) {
         this.idToken = idToken;
         this.lexema = lexema;

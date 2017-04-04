@@ -15,54 +15,68 @@ public class Lexico {
     public Lexico() {
     }
 
-    public void abreArquivo(String caminho) throws IOException{
+    public void abreArquivo(String caminho) throws IOException {
+        String x="";
+        try {
+            FileReader arquivo = new FileReader(caminho);
+            BufferedReader br = new BufferedReader(arquivo);
+            StringBuffer line = new StringBuffer();
+            do {
+                x = br.readLine();
+                line.append(x);
+            } while (x != null);
+            this.codigo = line.toString();
 
-         try {
-             FileReader arquivo = new FileReader(caminho);
-             BufferedReader br = new BufferedReader(arquivo);
-             StringBuffer line = new StringBuffer();
-             do {
-                line.append(br.readLine());
-             }while (br.readLine() != null);
-             this.codigo=line.toString();
+            br.close();
+            arquivo.close();
 
-             br.close();
-             arquivo.close();
-
-         }catch(IOException ex){
-                 ex.printStackTrace();
-             }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
 
     }
 
-    public Token Lex(int pRead,int linha) {
+    public Token Lex(int pRead, int linha) {
+
         StringBuilder sb = new StringBuilder();
         int estado = 1;
-        Character aux;
-        for (int i = pRead; i <= this.codigo.length();i++) {
-            aux = this.codigo.charAt(i);
-
+        Character aux = ' ';
+        while ((codigo.length()-4) != pRead){
+            if (pRead < codigo.length()) {
+                aux = this.codigo.charAt(pRead);
+            }
             switch (estado) {
                 case 1:
 
                     if (Character.isLetter(aux)) {
                         estado = 2;
                         sb.append(aux);
-                    } else if (aux.equals('=')) {
+                    }
+                    else if (Character.isDigit(aux)){
+                        estado = 10;
+                        sb.append(aux);
+                    }
+                    else if (aux.equals('=')) {
                         estado = 4;
+                        sb.append(aux);
                     } else if (aux.equals('*')) {
+                        sb.append(aux);
                         estado = 5;
                     } else if (aux.equals('/')) {
+                        sb.append(aux);
                         estado = 6;
                     } else if (aux.equals('+')) {
+                        sb.append(aux);
                         estado = 7;
                     } else if (aux.equals('-')) {
+                        sb.append(aux);
                         estado = 8;
-                    } else  if(aux.equals('\n')){
+                    } else if (aux.equals(';')) {
+                        sb.append(aux);
                         linha++;
-                        estado = 1;
-                    } else if(aux.equals(' ')){
+                        estado = 9;
+                    } else if (aux.equals(' ')) {
                         estado = 1;
                     }
                     break;
@@ -75,21 +89,80 @@ public class Lexico {
                     break;
 
                 case 3:
-                    token = new Token(sb.toString(),"Ident",linha,i);
+                    token = new Token(sb.toString(), "Ident", linha, pRead-1);
                     return token;
 
                 case 4:
-                    if(aux.equals('=')){
-                        token = new Token(aux.toString(),"Atrib",linha,i);
+
+                    token = new Token(sb.toString(), "Atrib", linha, pRead);
+                     return token;
+
+                case 5:
+
+                    token = new Token(sb.toString(), "Mult", linha, pRead);
+                    return token;
+
+                case 6:
+
+                    token = new Token(sb.toString(), "Div", linha, pRead);
+                    return token;
+
+                case 7:
+
+                    token = new Token(sb.toString(), "Soma", linha, pRead);
+                    return token;
+                case 8:
+
+                    token = new Token(sb.toString(), "Sub", linha, pRead);
+                    return token;
+                case 9:
+
+                    token = new Token(sb.toString(), "PteVir", linha, pRead);
+                    return token;
+
+
+                case 10:
+                    if (Character.isDigit(aux)) {
+                        estado = 10;
+                        sb.append(aux);
+                    } else if (aux.equals('.')){
+                        estado = 11;
+                    } else{
+                        estado = 13;
+                    }
+
+                    break;
+                case 11:
+                    if (Character.isDigit(aux)) {
+                        estado = 12;
+                        sb.append(aux);
+                    }else{
+                        token = new Token(sb.toString(), "Erro-Token", linha, pRead-1);
                         return token;
                     }
-                    break;
 
+                case 12:
+                    if (Character.isDigit(aux)){
+                                estado = 12;
+                                sb.append(aux);
+                            } else{
+                                token = new Token(sb.toString(), "Num", linha, pRead-1);
+                                return token;
+
+                            }
+                        break;
+                case 13:
+                    token = new Token(sb.toString(), "Num", linha, pRead-1);
+                    return token;
+
+                default:
+                    token = new Token(sb.toString(), "Num", linha, -1);
+                    return token;
             }
-
+            pRead++;
         }
 
-        return null;
+        return token = new Token("","",-1,-1);
     }
 
 
