@@ -33,11 +33,21 @@ public class Lexico {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
     }
 
-    public Token Lex(int pRead, int linha) {
+    public Token getToken(Token token) {
+
+        if (token.getpRead() != -1) {
+            this.token = Lex(token.getpRead(), token.getLinha());
+            if (this.token.getpRead() != -1) {
+                System.out.println(this.token.toString());
+                return this.token;
+            }
+        }
+        return null;
+    }
+
+    private Token Lex(int pRead, int linha) {
 
         StringBuilder sb = new StringBuilder();
         int estado = 1;
@@ -74,7 +84,6 @@ public class Lexico {
                         estado = 8;
                     } else if (aux.equals(';')) {
                         sb.append(aux);
-                        linha++;
                         estado = 9;
                     } else if (aux.equals(' ')) {
                         estado = 1;
@@ -116,8 +125,8 @@ public class Lexico {
                     token = new Token(sb.toString(), "Sub", linha, pRead);
                     return token;
                 case 9:
-
                     token = new Token(sb.toString(), "PteVir", linha, pRead);
+                    linha++;
                     return token;
 
 
@@ -164,6 +173,4 @@ public class Lexico {
 
         return token = new Token("","",-1,-1);
     }
-
-
 }

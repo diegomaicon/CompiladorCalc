@@ -12,15 +12,8 @@ public class Index{
                 Lexico lexico = new Lexico();
                 lexico.abreArquivo("teste.calc");
 
-                Token t = new Token();
-                t.setLinha(1);
-                t.setpRead(0);
+                ASintatico a = new ASintatico();
+                a.start();
 
-                do {
-                        t = lexico.Lex(t.getpRead(),t.getLinha());
-                        if(t.getpRead() != -1){
-                                System.out.println(t.toString());
-                        }
-                }while(t.getpRead() != -1);
         }
 }
