@@ -8,6 +8,7 @@ import java.io.IOException;
 public class Index{
 
         public static void main(String[] args) throws IOException {
+
                 Lexico lexico = new Lexico();
                 lexico.abreArquivo("teste.calc");
 
