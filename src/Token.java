@@ -3,20 +3,23 @@
  */
 public class Token {
 
-    private String idToken;
+    private TagToken idToken;
     private String lexema;
     private int linha;
     private int pRead;
     //private ArrayList<> inf;
 
     public Token(){
-
     }
-    public Token(String idToken, String lexema, int linha, int pRead) {
+
+
+
+    public Token(TagToken idToken, String lexema, int linha, int pRead) {
         this.idToken = idToken;
         this.lexema = lexema;
         this.linha = linha;
         this.pRead = pRead;
+
     }
 
     public int getpRead() {
@@ -25,14 +28,6 @@ public class Token {
 
     public void setpRead(int pRead) {
         this.pRead = pRead;
-    }
-
-    public String getIdToken() {
-        return idToken;
-    }
-
-    public void setIdToken(String idToken) {
-        this.idToken = idToken;
     }
 
     public String getLexema() {
@@ -51,6 +46,14 @@ public class Token {
         this.linha = linha;
     }
 
+
+    public TagToken getIdToken() {
+        return idToken;
+    }
+
+    public void setIdToken(TagToken idToken) {
+        this.idToken = idToken;
+    }
     @Override
     public String toString() {
         return "Token{" +

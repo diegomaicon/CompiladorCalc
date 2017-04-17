@@ -12,8 +12,8 @@ public class Index{
                 Lexico lexico = new Lexico();
                 lexico.abreArquivo("teste.calc");
 
-                ASintatico a = new ASintatico();
-                a.start();
+               // ASintatico a = new ASintatico();
+                //a.start();
 
         }
 }
