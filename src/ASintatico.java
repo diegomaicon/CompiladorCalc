@@ -11,9 +11,9 @@ public class ASintatico {
 
     public void start(){
         this.t = lexico.getToken(t);
-         if(t.getpRead() != -1){
+        if(t.getpRead() != -1){
             prog(t);
-        }else consome(TKEof);
+        }else consome("Eof");
     }
 
     private void prog(Token token){
@@ -22,25 +22,26 @@ public class ASintatico {
 
     private void seqInst(Token token){
         instrucao(token);
-        if (token.getLexema().equals(TKPtoeVir)){
-            consome(TKPtoeVir);
-        }
+        //espera um ponto e virgula
+        consome(";");
         seqInst(token);
     }
 
     private void instrucao(Token token){
-        if (token.getLexema().equals(TKPrint)) {
-            token = lexico.getToken(token);
-        } else if(token.getLexema().equals(TKIdent)) {
-            token = lexico.getToken(token);
-        } else if(token.getLexema().equals(TKPtoeVir)){
-            consome(token);
-        }
 
-        if (token.getLexema().equals(TKIdent)){
-            token = lexico.getToken(token);
-        } else if(token.getLexema().equals(TKAtrib)) {
-            token = lexico.getToken(token);
+        if (token.getLexema().equals("print")) {
+            //espera um print
+            consome("print");
+            //espera um identificador
+            consome("ident");
+            //espera um ponto e virgula
+            consome("ptovir");
+        } else if(token.getLexema().equals("ident")) {
+            //espera identificador
+            consome("ident");
+            //espera atribuicao
+            consome("atribuicao");
+
             exp(token);
         }
     }
@@ -48,16 +49,16 @@ public class ASintatico {
 
     private void valor(Token token){
 
-        if(token.getLexema().equals(TKIdent)){
-            consome(TKIdent);
-        }
-        else if(token.getLexema().equals(TKNum)) {
-            consome(TKNum);
-        }
-        else {
-            consome(TKAbrePar);
+        if(token.getLexema().equals("ident")){
+            //espera um identificador
+            consome("ident");
+        }else if(token.getLexema().equals("num")) {
+            //espera um numero
+            consome("num");
+        }else if(token.getLexema().equals("abraPar")){
+            consome("abrePar");
             exp(token);
-            consome(TKfechaPar);
+            consome("fechaPar");
         }
     }
 
@@ -71,12 +72,12 @@ public class ASintatico {
     }
 
     private void restSoma(Token token){
-        if (token.getLexema().equals(TKSoma)){
-            consome(TKSoma);
+        if (token.getLexema().equals("soma")){
+            consome("soma");
             soma(token);
         }
-        else if(token.getLexema().equals(TKSub)){
-            consome(TKSub);
+        else if(token.getLexema().equals("sub")){
+            consome("sub");
             soma(token);
         }
     }
@@ -88,23 +89,23 @@ public class ASintatico {
     }
 
     private void restMult(Token token){
-        if (token.getLexema().equals(TKMult)){
-            consome(TKMult);
+        if (token.getLexema().equals("mult")){
+            consome("mult");
             mult(token);
         }
-        else if(token.equals(TKDiv)){
-            consome(TKDiv);
+        else if(token.getLexema().equals("div")){
+            consome("div");
             mult(token);
         }
     }
-    private void  consome(Token token){
-                start();
-        /*
-        if (token.getLexema().equals(t)){
-              token = lexico.getToken();
+    private void  consome(String token){
+
+        if (this.t.getLexema().equals(token)){
+            this.t = lexico.getToken(this.t);
         } else{
-            System.out.println("Era esperado ", tokenString(t));," mas veio", lexema);
+            System.out.println("Era esperado "+token+" mas veio"+this.t.getLexema());
+            return;
         }
     }
-    */
+
 }
