@@ -105,7 +105,7 @@ public class ASintatico {
         } else{
             System.out.println("Era esperado "+token+" mas veio"+this.t.getLexema());
             return;
-        }
+        }//
     }
 
 }
