@@ -21,17 +21,9 @@ public class ASintatico {
     }
 
     private void seqInst(Token token){
-
-        if(token.equals(null)) {
-            start();
-        }else {
-            instrucao(token);
-
-        }
-
-
-                if (token.getLexema().equals(TKPtoeVir)){
-
+        instrucao(token);
+        if (token.getLexema().equals(TKPtoeVir)){
+            consome(TKPtoeVir);
         }
         seqInst(token);
     }
@@ -42,7 +34,7 @@ public class ASintatico {
         } else if(token.getLexema().equals(TKIdent)) {
             token = lexico.getToken(token);
         } else if(token.getLexema().equals(TKPtoeVir)){
-                 return;
+            consome(token);
         }
 
         if (token.getLexema().equals(TKIdent)){
@@ -57,10 +49,10 @@ public class ASintatico {
     private void valor(Token token){
 
         if(token.getLexema().equals(TKIdent)){
-            return;
+            consome(TKIdent);
         }
         else if(token.getLexema().equals(TKNum)) {
-            return;
+            consome(TKNum);
         }
         else {
             consome(TKAbrePar);
@@ -105,13 +97,14 @@ public class ASintatico {
             mult(token);
         }
     }
-
-
-    private void consome(Token token) {
-        if (token == t) {
-            lexico.getToken();
-        } else {
-            System.out.println("Era esperado ", tokenString(t)," mas veio", lexema);
+    private void  consome(Token token){
+                start();
+        /*
+        if (token.getLexema().equals(t)){
+              token = lexico.getToken();
+        } else{
+            System.out.println("Era esperado ", tokenString(t));," mas veio", lexema);
         }
     }
+    */
 }
