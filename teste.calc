@@ -1,4 +1,1 @@
-b2 = 15;
-aux = a * 3/(5-a);
-c = b + a/2;
-Print c;
+fat(n)  /* Calcula Fatorial */
