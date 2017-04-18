@@ -54,14 +54,15 @@ public class Lexico {
         StringBuilder sb = new StringBuilder();
         int estado = 1;
         Character aux = ' ';
-        while ((codigo.length() - 1) != pRead) {
+        while (codigo.length() != pRead) {
             if (pRead < codigo.length()) {
                 aux = this.codigo.charAt(pRead);
             }
             switch (estado) {
                 case 1:
-
-                    if (Character.isLetter(aux)) {
+                    if (aux.equals(' ')){
+                        estado = 1;
+                    } else if (Character.isLetter(aux)) {
                         estado = 2;
                         sb.append(aux);
                     } else if (Character.isDigit(aux)) {
@@ -85,15 +86,19 @@ public class Lexico {
                     } else if (aux.equals(';')) {
                         sb.append(aux);
                         estado = 9;
-                    } else if (aux.equals(' ')) {
-                        estado = 1;
-                    } else if(aux.equals('(')){
+                    } else if (aux.equals('(')) {
                         sb.append(aux);
                         estado = 14;
-                    } else if(aux.equals(')')){
+                    } else if (aux.equals(')')) {
                         sb.append(aux);
                         estado = 15;
-                    } else if(aux.equals("\n")){
+                    } else if (aux.equals('{')) {
+                        sb.append(aux);
+                        estado = 16;
+                    } else if (aux.equals('}')) {
+                        sb.append(aux);
+                        estado = 17;
+                    } else if (aux.equals('\n')) {
                         estado = 1;
                         linha++;
                     }
@@ -111,19 +116,25 @@ public class Lexico {
                     return token;
 
                 case 4:
-
-                    token = new Token(TagToken.TKAtrib, sb.toString(), linha, pRead);
-                    return token;
-
+                    if (aux.equals('=')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TKIgualIgual, sb.toString(), linha, pRead+1);
+                        return token;
+                    } else if (aux.equals(' ')){
+                        token = new Token(TagToken.TKAtrib, sb.toString(), linha, pRead);
+                        return token;
+                    }
+                    break;
                 case 5:
                     if (aux.equals('=')) {
                         sb.append(aux);
-                        token = new Token(TagToken.TKMultAtrib, sb.toString(), linha, pRead);
+                        token = new Token(TagToken.TKMultAtrib, sb.toString(), linha, pRead+1);
                         return token;
                     } else if (aux.equals(' ')) {
                         token = new Token(TagToken.TKAtrib, sb.toString(), linha, pRead);
                         return token;
                     }
+                    break;
                 case 6:
                     if (aux.equals('*')) {
                         estado = 50;     //Consome comentários
@@ -135,29 +146,31 @@ public class Lexico {
                 case 7:
                     if (aux.equals('+')) {
                         sb.append(aux);
-                        token = new Token(TagToken.TKPlusPlus, sb.toString(), linha, pRead);
+                        token = new Token(TagToken.TKPlusPlus, sb.toString(), linha, pRead+1);
                         return token;
                     } else if (aux.equals('=')) {
                         sb.append(aux);
-                        token = new Token(TagToken.TKSomaAtrib, sb.toString(), linha, pRead);
+                        token = new Token(TagToken.TKSomaAtrib, sb.toString(), linha, pRead+1);
                         return token;
                     } else if (aux.equals(' ')) {
                         token = new Token(TagToken.TKSoma, sb.toString(), linha, pRead);
                         return token;
                     }
+                    break;
                 case 8:
                     if (aux.equals('-')) {
                         sb.append(aux);
-                        token = new Token(TagToken.TKSubSub, sb.toString(), linha, pRead);
+                        token = new Token(TagToken.TKSubSub, sb.toString(), linha, pRead+1);
                         return token;
                     } else if (aux.equals('=')) {
                         sb.append(aux);
-                        token = new Token(TagToken.TKSubAtrib, sb.toString(), linha, pRead);
+                        token = new Token(TagToken.TKSubAtrib, sb.toString(), linha, pRead+1);
                         return token;
                     } else if (aux.equals(' ')) {
-                        token = new Token(TagToken.TKSub, sb.toString(), linha, pRead);
+                        token = new Token(TagToken.TKSub, sb.toString(), linha, pRead+1);
                         return token;
                     }
+                    break;
                 case 9:
                     token = new Token(TagToken.TKPteVir, sb.toString(), linha, pRead);
                     return token;
@@ -167,6 +180,7 @@ public class Lexico {
                         estado = 10;
                         sb.append(aux);
                     } else if (aux.equals('.')) {
+                        sb.append(aux);
                         estado = 11;
                     } else {
                         estado = 13;
@@ -181,20 +195,20 @@ public class Lexico {
                         token = new Token(TagToken.TKErroToken, sb.toString(), linha, pRead - 1);
                         return token;
                     }
-
-                case 12:
+                    break;
+                case 12: //Pega numero Float
                     if (Character.isDigit(aux)) {
                         estado = 12;
                         sb.append(aux);
                     } else {
-                        token = new Token(TagToken.TKNumFloat, sb.toString(), linha, pRead - 1);
+                        token = new Token(TagToken.TKNumFloat, sb.toString(), linha, pRead);
                         return token;
 
                     }
                     break;
 
-                case 13:
-                    token = new Token(TagToken.TKNumInteiro, sb.toString(), linha, pRead - 1);
+                case 13: //Pega numero inteiro
+                    token = new Token(TagToken.TKNumInteiro, sb.toString(), linha, pRead-1);
                     return token;
 
                 case 14: // Abre parentese
@@ -205,6 +219,13 @@ public class Lexico {
                     token = new Token(TagToken.TKFechaPar, sb.toString(), linha, pRead);
                     return token;
 
+                case 16: // Abre Chave
+                    token = new Token(TagToken.TKAbreChav, sb.toString(), linha, pRead);
+                    return token;
+
+                case 17:  //Fecha Chave
+                    token = new Token(TagToken.TKFechaChav, sb.toString(), linha, pRead);
+                    return token;
                 case 50: /* Cosome comentários */
                     if (Character.isDigit(aux) || Character.isLetter(aux)){
                         estado = 50;
@@ -215,6 +236,7 @@ public class Lexico {
                 case 51:
                     if (aux.equals('/')){
                         estado = 1;
+                        sb.deleteCharAt(0);
                     } else estado = 50;
 
                     break;

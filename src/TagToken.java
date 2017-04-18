@@ -19,4 +19,7 @@ public enum TagToken {
     TKNumFloat,     // "12.5"
     TKAbrePar,      // "("
     TKFechaPar,     // ")"
+    TKAbreChav,     // "{"
+    TKFechaChav,    // "}"
+    TKIgualIgual,   // "=="
  }

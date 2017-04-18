@@ -16,7 +16,6 @@ public class Index{
 
                while (t != null){
                 t = lexico.getToken(t);
-                System.out.println(t.toString());
                }
 
 
