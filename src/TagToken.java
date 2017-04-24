@@ -2,10 +2,9 @@
  * Created by Diego on 17/04/2017.
  */
 public enum TagToken {
-    TKNull,         // Null
+    //separadores e operadores
     TKAtrib,        // "*"
     TKMultAtrib,    // "*="
-    TKIdent,        // "nomes"
     TKPlusPlus,     // "++"
     TKSomaAtrib,    // "+="
     TKSoma,         // "+"
@@ -14,12 +13,35 @@ public enum TagToken {
     TKSubAtrib,     // "-="
     TKDiv,          // "/"
     TKPteVir,       // ";"
-    TKErroToken,    // "Erro"
-    TKNumInteiro,   // "12"
-    TKNumFloat,     // "12.5"
     TKAbrePar,      // "("
     TKFechaPar,     // ")"
     TKAbreChav,     // "{"
     TKFechaChav,    // "}"
     TKIgualIgual,   // "=="
+    TKVirgula,      // ","
+
+
+
+    //palavras reservadas
+    TKclass,
+    TKif,
+    TKwhile,
+    TKdo,
+    TKfor,
+    TKbreak,
+    TKcontinue,
+    TKreturn,
+    TKelse,
+    TKstatic,
+    TKnew,
+    TKnil,
+
+    // especiais
+    TKIdent,        // "nomes" [a-zA-Z][a-zA-Z0-9]*
+    TKNumInteiro,   // "12"  [0-9]+
+    TKNumFloat,     // "12.5"  [0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?
+    TKString,  //     ["]([^"\\] | \\.)*["]
+    TKErroToken,    // "Erro" EOF,
+    TKNull,         // Null
+
  }

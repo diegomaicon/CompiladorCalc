@@ -98,6 +98,11 @@ public class Lexico {
                     } else if (aux.equals('}')) {
                         sb.append(aux);
                         estado = 17;
+
+                    } else if (aux.equals(',')) {
+                        sb.append(aux);
+                        estado = 18;
+
                     } else if (aux.equals('\n')) {
                         estado = 1;
                         linha++;
@@ -136,7 +141,7 @@ public class Lexico {
                     }
                     break;
                 case 6:
-                    if (aux.equals('*')) {
+                    if (aux.equals('*') || aux.equals('/')) {
                         estado = 50;     //Consome comentários
                     } else if (aux.equals(' ')) {
                         token = new Token(TagToken.TKDiv, sb.toString(), linha, pRead);
@@ -226,19 +231,27 @@ public class Lexico {
                 case 17:  //Fecha Chave
                     token = new Token(TagToken.TKFechaChav, sb.toString(), linha, pRead);
                     return token;
+
+                case 18:  //Virgula
+                    token = new Token(TagToken.TKVirgula, sb.toString(), linha, pRead);
+                    return token;
+
                 case 50: /* Cosome comentários */
                     if (Character.isDigit(aux) || Character.isLetter(aux)){
                         estado = 50;
                     }else  if (aux.equals('*')){
                         estado = 51;
+                    }else if(aux.equals('\n')){
+                        estado = 1;
+                        sb.deleteCharAt(0);
                     }
+
                     break;
                 case 51:
                     if (aux.equals('/')){
                         estado = 1;
                         sb.deleteCharAt(0);
                     } else estado = 50;
-
                     break;
 
                 default:
