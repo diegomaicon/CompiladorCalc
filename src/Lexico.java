@@ -361,7 +361,10 @@ public class Lexico {
 
 
                 case 30: //Pegar String
-                    if (!(aux == '"')){
+                    if (!(aux == '"')) {
+                        sb.append(aux);
+                        estado = 30;
+                    } else if (sb.charAt(sb.length() - 1) == '\\') {
                         sb.append(aux);
                         estado = 30;
                     } else{
@@ -380,7 +383,6 @@ public class Lexico {
                         estado = 1;
                         sb.deleteCharAt(0);
                     }
-
                     break;
                 case 51:
                     if (aux.equals('/')){
