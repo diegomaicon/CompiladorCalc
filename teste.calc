@@ -1,4 +1,5 @@
-f(n)  // Comentário
+f(n)::funcao  // Comentário
    {
-
-   }
+    vetor[i];
+    :teste
+    }

@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Lexico {
     private Token token;
     private String codigo;
-    private int L;
+
 
     public Lexico() {
     }
@@ -98,10 +98,18 @@ public class Lexico {
                     } else if (aux.equals('}')) {
                         sb.append(aux);
                         estado = 17;
-
                     } else if (aux.equals(',')) {
                         sb.append(aux);
                         estado = 18;
+                    } else if (aux.equals('[')) {
+                        sb.append(aux);
+                        estado = 19;
+                    } else if (aux.equals(']')) {
+                        sb.append(aux);
+                        estado = 20;
+                    } else if (aux.equals(':')) {
+                        sb.append(aux);
+                        estado = 21;
 
                     } else if (aux.equals('\n')) {
                         estado = 1;
@@ -117,8 +125,40 @@ public class Lexico {
                     break;
 
                 case 3:
-                    token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead - 1);
-                    return token;
+                    //Buscando palavras reservadas
+                    switch (sb.toString().toUpperCase()){
+                        case "CLASS":
+                            token = new Token(TagToken.TKclass, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "IF":
+                            token = new Token(TagToken.TKif, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "WHILE":
+                            token = new Token(TagToken.TKwhile, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "DO":
+                            token = new Token(TagToken.TKdo, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "BREAK":
+                            token = new Token(TagToken.TKbreak, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "FOR":
+                            token = new Token(TagToken.TKfor, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "CONTINUE":
+                            token = new Token(TagToken.TKcontinue, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "RETURN":
+                            token = new Token(TagToken.TKreturn, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "":
+                            token = new Token(TagToken.TKwhile, sb.toString(), linha, pRead - 1);
+                            return token;
+                        default:
+                            token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead - 1);
+                            return token;
+                    }
+
 
                 case 4:
                     if (aux.equals('=')) {
@@ -157,11 +197,11 @@ public class Lexico {
                         sb.append(aux);
                         token = new Token(TagToken.TKSomaAtrib, sb.toString(), linha, pRead+1);
                         return token;
-                    } else if (aux.equals(' ')) {
+                    } else {
                         token = new Token(TagToken.TKSoma, sb.toString(), linha, pRead);
                         return token;
                     }
-                    break;
+
                 case 8:
                     if (aux.equals('-')) {
                         sb.append(aux);
@@ -236,6 +276,23 @@ public class Lexico {
                     token = new Token(TagToken.TKVirgula, sb.toString(), linha, pRead);
                     return token;
 
+                case 19:  //Abre Couchete
+                    token = new Token(TagToken.TKAbreCouchete, sb.toString(), linha, pRead);
+                    return token;
+
+                case 20:  //Fecha Couchete
+                    token = new Token(TagToken.TKFechaCouchete, sb.toString(), linha, pRead);
+                    return token;
+
+                case 21:
+                    if (aux.equals(':')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TK4tpo, sb.toString(), linha, pRead+1);
+                        return token;
+                    } else {
+                        token = new Token(TagToken.TK2pto, sb.toString(), linha, pRead);
+                        return token;
+                    }
                 case 50: /* Cosome comentários */
                     if (Character.isDigit(aux) || Character.isLetter(aux)){
                         estado = 50;
