@@ -1,5 +1,10 @@
-f(n)::funcao  // Comentário
-   {
-    vetor[i];
-    :teste
-    }
+fatorial  && || (n){
+	if(n == 1)
+		return 1;
+	else
+		return n * fatorial (n-1);
+}
+main (i){
+	for (i = 1; i <= 10; ++ i)
+		print (i, "fatorial :", fatorial (i), "\ n");
+}

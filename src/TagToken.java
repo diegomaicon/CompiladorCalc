@@ -3,7 +3,8 @@
  */
 public enum TagToken {
     //separadores e operadores
-    TKAtrib,        // "*"
+    TKAtrib,        // "="
+    TKMult,        //  "*"
     TKMultAtrib,    // "*="
     TKPlusPlus,     // "++"
     TKSomaAtrib,    // "+="
@@ -23,6 +24,14 @@ public enum TagToken {
     TKFechaCouchete,// "]"
     TK2pto,         // ":"
     TK4tpo,         // "::"
+    TKMod,          // "%"
+    TKMaior,        // ">"
+    TKMenor,        // "<"
+    TKMaiorIgual,   // ">="
+    TKMenorIgual,   // "<="
+    TKAnd,          //  "&&"
+    TKOr,            // "||"
+
 
 
     //palavras reservadas
@@ -38,6 +47,7 @@ public enum TagToken {
     TKstatic,
     TKnew,
     TKnil,
+    TKprint,
 
     // especiais
     TKIdent,        // "nomes" [a-zA-Z][a-zA-Z0-9]*

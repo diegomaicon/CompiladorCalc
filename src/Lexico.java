@@ -110,7 +110,24 @@ public class Lexico {
                     } else if (aux.equals(':')) {
                         sb.append(aux);
                         estado = 21;
-
+                    } else if (aux.equals('%')) {
+                        sb.append(aux);
+                        estado = 22;
+                    } else if (aux.equals('>')) {
+                        sb.append(aux);
+                        estado = 23;
+                    } else if (aux.equals('<')) {
+                        sb.append(aux);
+                        estado = 24;
+                    } else if (aux.equals('&')) {
+                        sb.append(aux);
+                        estado = 25;
+                    } else if (aux.equals('|')) {
+                        sb.append(aux);
+                        estado = 26;
+                    } else if (aux.equals('"')) {
+                        sb.append(aux);
+                        estado = 30;
                     } else if (aux.equals('\n')) {
                         estado = 1;
                         linha++;
@@ -151,8 +168,20 @@ public class Lexico {
                         case "RETURN":
                             token = new Token(TagToken.TKreturn, sb.toString(), linha, pRead - 1);
                             return token;
-                        case "":
-                            token = new Token(TagToken.TKwhile, sb.toString(), linha, pRead - 1);
+                        case "ELSE":
+                            token = new Token(TagToken.TKelse, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "STATIC":
+                            token = new Token(TagToken.TKstatic, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "NEW":
+                            token = new Token(TagToken.TKnew, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "NIL":
+                            token = new Token(TagToken.TKnil, sb.toString(), linha, pRead - 1);
+                            return token;
+                        case "PRINT":
+                            token = new Token(TagToken.TKprint, sb.toString(), linha, pRead - 1);
                             return token;
                         default:
                             token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead - 1);
@@ -165,21 +194,21 @@ public class Lexico {
                         sb.append(aux);
                         token = new Token(TagToken.TKIgualIgual, sb.toString(), linha, pRead+1);
                         return token;
-                    } else if (aux.equals(' ')){
+                    } else {
                         token = new Token(TagToken.TKAtrib, sb.toString(), linha, pRead);
                         return token;
                     }
-                    break;
+
                 case 5:
                     if (aux.equals('=')) {
                         sb.append(aux);
                         token = new Token(TagToken.TKMultAtrib, sb.toString(), linha, pRead+1);
                         return token;
-                    } else if (aux.equals(' ')) {
-                        token = new Token(TagToken.TKAtrib, sb.toString(), linha, pRead);
+                    } else {
+                        token = new Token(TagToken.TKMult, sb.toString(), linha, pRead);
                         return token;
                     }
-                    break;
+
                 case 6:
                     if (aux.equals('*') || aux.equals('/')) {
                         estado = 50;     //Consome comentários
@@ -211,11 +240,11 @@ public class Lexico {
                         sb.append(aux);
                         token = new Token(TagToken.TKSubAtrib, sb.toString(), linha, pRead+1);
                         return token;
-                    } else if (aux.equals(' ')) {
-                        token = new Token(TagToken.TKSub, sb.toString(), linha, pRead+1);
+                    } else{
+                        token = new Token(TagToken.TKSub, sb.toString(), linha, pRead);
                         return token;
                     }
-                    break;
+
                 case 9:
                     token = new Token(TagToken.TKPteVir, sb.toString(), linha, pRead);
                     return token;
@@ -293,6 +322,55 @@ public class Lexico {
                         token = new Token(TagToken.TK2pto, sb.toString(), linha, pRead);
                         return token;
                     }
+
+                case 22:  //Mod
+                    token = new Token(TagToken.TKMod, sb.toString(), linha, pRead);
+                    return token;
+
+                case 23: //Maior Igual ou Maior
+                    if (aux.equals('=')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TKMaiorIgual, sb.toString(), linha, pRead+1);
+                        return token;
+                    } else {
+                        token = new Token(TagToken.TKMaior, sb.toString(), linha, pRead);
+                        return token;
+                    }
+
+                case 24:
+                    if (aux.equals('=')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TKMenorIgual, sb.toString(), linha, pRead+1);
+                        return token;
+                    } else {
+                        token = new Token(TagToken.TKMenor, sb.toString(), linha, pRead);
+                        return token;
+                    }
+                case 25:
+                    if (aux.equals('&')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TKAnd, sb.toString(), linha, pRead+1);
+                        return token;
+                    }
+                case 26:
+                    if (aux.equals('|')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TKOr, sb.toString(), linha, pRead + 1);
+                        return token;
+                    }
+
+
+                case 30: //Pegar String
+                    if (!(aux == '"')){
+                        sb.append(aux);
+                        estado = 30;
+                    } else{
+                        sb.append(aux);
+                        token = new Token(TagToken.TKString, sb.toString(), linha, pRead+1);
+                        return token;
+                    }
+                    break;
+
                 case 50: /* Cosome comentários */
                     if (Character.isDigit(aux) || Character.isLetter(aux)){
                         estado = 50;
