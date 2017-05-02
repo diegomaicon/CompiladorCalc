@@ -29,8 +29,9 @@ public enum TagToken {
     TKMenor,        // "<"
     TKMaiorIgual,   // ">="
     TKMenorIgual,   // "<="
-    TKAnd,          //  "&&"
-    TKOr,            // "||"
+    TKAnd,          // "&&"
+    TKOr,           // "||"
+    TKSeta,         // "->"
 
 
 
@@ -48,6 +49,7 @@ public enum TagToken {
     TKnew,
     TKnil,
     TKprint,
+    TKthis,
 
     // especiais
     TKIdent,        // "nomes" [a-zA-Z][a-zA-Z0-9]*

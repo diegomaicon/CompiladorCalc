@@ -183,6 +183,9 @@ public class Lexico {
                         case "PRINT":
                             token = new Token(TagToken.TKprint, sb.toString(), linha, pRead - 1);
                             return token;
+                        case "THIS":
+                            token = new Token(TagToken.TKthis, sb.toString(), linha, pRead - 1);
+                            return token;
                         default:
                             token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead - 1);
                             return token;
@@ -238,8 +241,12 @@ public class Lexico {
                         return token;
                     } else if (aux.equals('=')) {
                         sb.append(aux);
-                        token = new Token(TagToken.TKSubAtrib, sb.toString(), linha, pRead+1);
+                        token = new Token(TagToken.TKSubAtrib, sb.toString(), linha, pRead + 1);
                         return token;
+                    } else if (aux.equals('>')) {
+                            sb.append(aux);
+                            token = new Token(TagToken.TKSeta, sb.toString(), linha, pRead+1);
+                            return token;
                     } else{
                         token = new Token(TagToken.TKSub, sb.toString(), linha, pRead);
                         return token;
@@ -271,7 +278,8 @@ public class Lexico {
                     }
                     break;
                 case 12: //Pega numero Float
-                    if (Character.isDigit(aux)) {
+
+                    if (Character.isDigit(aux) || aux.equals('E') || aux.equals('e') || aux.equals('+') || aux.equals('-')) {
                         estado = 12;
                         sb.append(aux);
                     } else {

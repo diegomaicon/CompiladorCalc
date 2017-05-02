@@ -1,10 +1,10 @@
-"fatorial \" teste" (n){
-	if(n == 1)
-		return 1;
-	else
-		return n * fatorial (n-1);
-}
-main (i){
-	for (i = 1; i <= 10; ++ i)
-		print (i, "fatorial :", fatorial (i), "\ n");
-}
+class A:B
+  {
+    a,x;
+    func(a,b,c);
+  }
+
+  A::func(a,b,c; i,j){
+        this->a = a;
+        this->x = b + 2.3E-3;
+  }
