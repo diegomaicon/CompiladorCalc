@@ -125,6 +125,9 @@ public class Lexico {
                     } else if (aux.equals('|')) {
                         sb.append(aux);
                         estado = 26;
+                    } else if (aux.equals('!')) {
+                        sb.append(aux);
+                        estado = 27;
                     } else if (aux.equals('"')) {
                         sb.append(aux);
                         estado = 30;
@@ -366,7 +369,15 @@ public class Lexico {
                         token = new Token(TagToken.TKOr, sb.toString(), linha, pRead + 1);
                         return token;
                     }
-
+                case 27:
+                    if (aux.equals('=')) {
+                        sb.append(aux);
+                        token = new Token(TagToken.TKDiferente, sb.toString(), linha, pRead + 1);
+                        return token;
+                    } else{
+                        token = new Token(TagToken.TKNegacao, sb.toString(), linha, pRead);
+                        return token;
+                    }
 
                 case 30: //Pegar String
                     if (!(aux == '"')) {

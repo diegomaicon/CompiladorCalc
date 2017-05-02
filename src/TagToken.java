@@ -19,6 +19,8 @@ public enum TagToken {
     TKAbreChav,     // "{"
     TKFechaChav,    // "}"
     TKIgualIgual,   // "=="
+    TKDiferente,    // "!="
+    TKNegacao,      // "!"
     TKVirgula,      // ","
     TKAbreCouchete, // "["
     TKFechaCouchete,// "]"
