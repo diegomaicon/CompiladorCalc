@@ -151,43 +151,43 @@ public class Lexico {
                     //Buscando palavras reservadas
                     switch (sb.toString().toUpperCase()){
                         case "CLASS":
-                            token = new Token(TagToken.TKclass, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKclass, sb.toString(), linha, pRead );
                             return token;
                         case "IF":
-                            token = new Token(TagToken.TKif, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKif, sb.toString(), linha, pRead );
                             return token;
                         case "WHILE":
-                            token = new Token(TagToken.TKwhile, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKwhile, sb.toString(), linha, pRead );
                             return token;
                         case "DO":
-                            token = new Token(TagToken.TKdo, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKdo, sb.toString(), linha, pRead );
                             return token;
                         case "BREAK":
-                            token = new Token(TagToken.TKbreak, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKbreak, sb.toString(), linha, pRead );
                             return token;
                         case "FOR":
-                            token = new Token(TagToken.TKfor, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKfor, sb.toString(), linha, pRead );
                             return token;
                         case "CONTINUE":
-                            token = new Token(TagToken.TKcontinue, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKcontinue, sb.toString(), linha, pRead );
                             return token;
                         case "RETURN":
-                            token = new Token(TagToken.TKreturn, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKreturn, sb.toString(), linha, pRead );
                             return token;
                         case "ELSE":
-                            token = new Token(TagToken.TKelse, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKelse, sb.toString(), linha, pRead );
                             return token;
                         case "STATIC":
-                            token = new Token(TagToken.TKstatic, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKstatic, sb.toString(), linha, pRead );
                             return token;
                         case "NEW":
-                            token = new Token(TagToken.TKnew, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKnew, sb.toString(), linha, pRead );
                             return token;
                         case "NIL":
-                            token = new Token(TagToken.TKnil, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKnil, sb.toString(), linha, pRead );
                             return token;
                         case "PRINT":
-                            token = new Token(TagToken.TKprint, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKprint, sb.toString(), linha, pRead );
                             return token;
                         case "THIS":
                             token = new Token(TagToken.TKthis, sb.toString(), linha, pRead - 1);

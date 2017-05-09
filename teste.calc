@@ -1,10 +1,11 @@
-  func(a,b,c);
-    aux
+class Pilha{
+    topo;
+    push(x);
+    pop();
+    empty;
+}
 
-  A::func(a,b,c; i,j){
-        this->a = a;
-        this->x = b + 2.3E-3;
-
-         !Aux != Aux2
-
-  }
+Pilha::Pilha(){
+    topo = nil;
+    return this;
+}
