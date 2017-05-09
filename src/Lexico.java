@@ -141,7 +141,10 @@ public class Lexico {
                     if (Character.isLetter(aux) || Character.isDigit(aux)) {
                         estado = 2;
                         sb.append(aux);
-                    } else estado = 3;
+                    } else{
+                        estado = 3;
+                        pRead--;
+                    }
                     break;
 
                 case 3:
@@ -190,8 +193,13 @@ public class Lexico {
                             token = new Token(TagToken.TKthis, sb.toString(), linha, pRead - 1);
                             return token;
                         default:
-                            token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead - 1);
-                            return token;
+                            if(aux.equals('(')){
+                                token = new Token(TagToken.TKFunc, sb.toString(), linha, pRead );
+                                return token;
+                            } else{
+                                token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead);
+                                return token;
+                            }
                     }
 
 
@@ -376,6 +384,14 @@ public class Lexico {
                         return token;
                     } else{
                         token = new Token(TagToken.TKNegacao, sb.toString(), linha, pRead);
+                        return token;
+                    }
+                case 28:
+                    if(aux.equals("(")){
+                        token = new Token(TagToken.TKFunc, sb.toString(), linha, pRead );
+                        return token;
+                    } else{
+                        token = new Token(TagToken.TKIdent, sb.toString(), linha, pRead);
                         return token;
                     }
 

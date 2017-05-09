@@ -1,8 +1,5 @@
-class A:B
-  {
-    a,x;
-    func(a,b,c);
-  }
+  func(a,b,c);
+    aux
 
   A::func(a,b,c; i,j){
         this->a = a;

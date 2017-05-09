@@ -55,6 +55,7 @@ public enum TagToken {
 
     // especiais
     TKIdent,        // "nomes" [a-zA-Z][a-zA-Z0-9]*
+    TKFunc,
     TKNumInteiro,   // "12"  [0-9]+
     TKNumFloat,     // "12.5"  [0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?
     TKString,  //     ["]([^"\\] | \\.)*["]
