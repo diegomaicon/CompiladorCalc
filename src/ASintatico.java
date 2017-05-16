@@ -5,7 +5,7 @@ import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
  */
 public class ASintatico {
     private Lexico lexico = new Lexico();
-    private Token t = new Token("","",1,0);
+    private Token t = new Token(TagToken.TKNull,"",1,0);
 
 
     public void ASintatico(){
@@ -15,7 +15,7 @@ public class ASintatico {
         this.t = lexico.getToken(t);
         if(t.getpRead() != -1){
             definitions_list(t);
-        }else consome("Eof");
+        }else consome(TagToken.TKErroToken);
     }
 
     private void definitions_list(Token token){
@@ -190,6 +190,7 @@ public class ASintatico {
 
     private void statement_list(Token token){
 
+
     }
 
     private void statement(Token token){
@@ -300,7 +301,7 @@ public class ASintatico {
 
     }
 
-    private void  consome(String token){
+    private void  consome(TagToken token){
 
         if (this.t.getLexema().equals(token)){
             this.t = lexico.getToken(this.t);
