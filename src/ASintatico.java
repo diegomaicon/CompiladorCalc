@@ -1,19 +1,25 @@
 import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
 
 import javax.swing.text.html.HTML;
+import java.io.IOException;
 
 /**
  * Created by Diego on 05/04/2017.
  */
 public class ASintatico {
     private Lexico lexico = new Lexico();
-    private Token t = new Token(TagToken.TKNull,"",1,0);
+    private Token t = new Token();
 
-
-    public void ASintatico(){
-    }
 
     public void start(){
+        try {
+            lexico.abreArquivo("teste.calc");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        lexico.getToken( new Token(TagToken.TKNull,"",1,0));
+
+
         this.t = lexico.getToken(t);
         if(t.getpRead() != -1){
             definitions_list(t);

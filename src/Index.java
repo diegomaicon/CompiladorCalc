@@ -9,18 +9,9 @@ public class Index{
 
 
         public static void main(String[] args) throws IOException {
-                Token t = new Token(TagToken.TKNull,"",1,0);
 
-                Lexico lexico = new Lexico();
-                lexico.abreArquivo("teste.calc");
-
-               while (t != null){
-                t = lexico.getToken(t);
-               }
-
-
-               // ASintatico a = new ASintatico();
-                //a.start();
+                ASintatico a = new ASintatico();
+                a.start();
 
         }
 }
