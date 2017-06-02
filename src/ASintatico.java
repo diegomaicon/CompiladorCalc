@@ -1,5 +1,7 @@
 import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
 
+import javax.swing.text.html.HTML;
+
 /**
  * Created by Diego on 05/04/2017.
  */
@@ -190,115 +192,423 @@ public class ASintatico {
 
     private void statement_list(Token token){
 
+        if(token.equals(TagToken.TKif) || token.equals(TagToken.TKwhile) || token.equals(TagToken.TKdo) || token.equals(TagToken.TKPteVir) ||
+                token.equals(TagToken.TKAbreChav) || token.equals(TagToken.TKfor) || token.equals(TagToken.TKbreak) || token.equals(TagToken.TKcontinue) ||
+                token.equals(TagToken.TKreturn) || token.equals(TagToken.TKSoma) || token.equals(TagToken.TKSub) || token.equals(TagToken.TKDiferente) ||
+                token.equals(TagToken.TKPlusPlus) || token.equals(TagToken.TKSubSub) || token.equals(TagToken.TKIdent) || token.equals(TagToken.TKAbrePar) ||
+                token.equals(TagToken.TKnew) || token.equals(TagToken.TKFunc) || token.equals(TagToken.TKNumInteiro) || token.equals(TagToken.TKNumFloat) ||
+                token.equals(TagToken.TKString) || token.equals(TagToken.TKnil) || token.equals(TagToken.TKFechaChav) )
+        {
+            statement(token);
+            statement_list(token);
+        }
 
     }
 
     private void statement(Token token){
 
+        if(token.equals(TagToken.TKif)){
+
+            consome(TagToken.TKif);
+            consome(TagToken.TKAbrePar);
+            exp(token);
+            consome(TagToken.TKFechaPar);
+            statement(token);
+            op_else(token);
+
+        }else if(token.equals(TagToken.TKwhile)) {
+
+            consome(TagToken.TKwhile);
+            consome(TagToken.TKAbrePar);
+            exp(token);
+            consome(TagToken.TKFechaPar);
+            statement(token);
+
+
+        }else if(token.equals(TagToken.TKdo)) {
+
+            consome(TagToken.TKdo);
+            statement(token);
+            consome(TagToken.TKwhile);
+            consome(TagToken.TKAbrePar);
+            exp(token);
+            consome(TagToken.TKFechaPar);
+            consome(TagToken.TKPteVir);
+
+        }else if(token.equals(TagToken.TKAbreChav)) {
+
+            consome(TagToken.TKAbreChav);
+            statement_list(token);
+            consome(TagToken.TKFechaChav);
+
+        }else if(token.equals(TagToken.TKfor)) {
+
+            consome(TagToken.TKfor);
+            consome(TagToken.TKAbrePar);
+            exp(token);
+            consome(TagToken.TKPteVir);
+            exp(token);
+            consome(TagToken.TKPteVir);
+            exp(token);
+            consome(TagToken.TKFechaPar);
+            statement(token);
+
+        }else if(token.equals(TagToken.TKbreak)) {
+
+            consome(TagToken.TKbreak);
+            consome(TagToken.TKPteVir);
+
+        }else if(token.equals(TagToken.TKcontinue)) {
+
+            consome(TagToken.TKcontinue);
+            consome(TagToken.TKPteVir);
+
+        }else if(token.equals(TagToken.TKreturn)) {
+
+            consome(TagToken.TKreturn);
+            op_expression(token);
+
+        }else if(token.equals(TagToken.TKSoma) || token.equals(TagToken.TKSub) || token.equals(TagToken.TKNegacao) || token.equals(TagToken.TKPlusPlus)
+                || token.equals(TagToken.TKSubSub) || token.equals(TagToken.TKIdent) || token.equals(TagToken.TKAbrePar) || token.equals(TagToken.TKnew)
+                || token.equals(TagToken.TKFunc) || token.equals(TagToken.TKNumInteiro) || token.equals(TagToken.TKNumFloat) || token.equals(TagToken.TKString)
+                || token.equals(TagToken.TKnil)) {
+
+            op_expression(token);
+            consome(TagToken.TKPteVir);
+        }
     }
 
     private void op_else(Token token){
 
+        if(token.equals(TagToken.TKelse)){
+
+            consome(TagToken.TKelse);
+            statement(token);
+        }
+        //ou vazio
     }
 
     private void op_expression(Token token){
 
+        if(token.equals(TagToken.TKSoma) || token.equals(TagToken.TKSub) || token.equals(TagToken.TKDiferente) || token.equals(TagToken.TKPlusPlus)
+                || token.equals(TagToken.TKSubSub) || token.equals(TagToken.TKIdent) || token.equals(TagToken.TKAbrePar) || token.equals(TagToken.TKnew)
+                || token.equals(TagToken.TKFunc) || token.equals(TagToken.TKNumInteiro) || token.equals(TagToken.TKNumFloat) || token.equals(TagToken.TKString)
+                || token.equals(TagToken.TKnil)) {
+
+            exp(token);
+        }
+        //ou vazio
     }
 
     private void op_arguments(Token token){
 
+        if(token.equals(TagToken.TKIdent)){
+
+            arg_list(token);
+        }
+        //ou vazio
     }
 
     private void arg_list(Token token){
 
+        consome(TagToken.TKIdent);
+        R_arg_list(token);
     }
 
     private void R_arg_list(Token token){
 
+        if(token.equals(TagToken.TKVirgula)){
+            consome(TagToken.TKVirgula);
+            arg_list(token);
+        }
+        //ou vazio
     }
 
     private void lvalue(Token token){
 
+        consome(TagToken.TKIdent);
+        op_vector(token);
     }
 
     private void exp(Token token){
 
+        atrib(token);
+        R_exp(token);
     }
 
     private void R_exp(Token token){
 
+        if(token.equals(TagToken.TKVirgula)){
+
+            consome(TagToken.TKVirgula);
+            atrib(token);
+            R_exp(token);
+        }
+        //ou vazio
     }
 
     private void atrib(Token token){
 
+        or(token);
+        R_atrib(token);
     }
 
     private void R_atrib(Token token){
 
+        if(token.equals(TagToken.TKAtrib)){
+
+            consome(TagToken.TKAtrib);
+            or(token);
+            R_atrib(token);
+        }
     }
 
     private void or(Token token){
 
+        and(token);
+        R_or(token);
     }
 
     private void R_or(Token token){
 
+        if(token.equals(TagToken.TKOr)) {
+
+            consome(TagToken.TKOr);
+            and(token);
+            R_or(token);
+        }
+        //ou vazio
     }
 
     private void and(Token token){
 
+        rel(token);
+        R_and(token);
     }
 
     private void R_and(Token token){
 
+        if(token.equals(TagToken.TKAnd)){
+
+            consome(TagToken.TKAnd);
+            rel(token);
+            R_and(token);
+        }
+        //ou vazio
     }
 
     private void rel(Token token){
 
+        soma(token);
+        R_rel(token);
     }
 
     private void R_rel(Token token){
 
+        if(token.equals(TagToken.TKAtrib)){
+
+            consome(TagToken.TKAtrib);
+            soma(token);
+
+        }else if(token.equals(TagToken.TKDiferente)){
+
+            consome(TagToken.TKDiferente);
+            soma(token);
+
+        }else if(token.equals(TagToken.TKMenor)){
+
+            consome(TagToken.TKMenor);
+            soma(token);
+
+        }else if(token.equals(TagToken.TKMenorIgual)){
+
+            consome(TagToken.TKMenorIgual);
+            soma(token);
+
+        }else if(token.equals(TagToken.TKMaior)){
+
+            consome(TagToken.TKMaior);
+            soma(token);
+
+        }else if(token.equals(TagToken.TKMaiorIgual)){
+
+            consome(TagToken.TKMaiorIgual);
+            soma(token);
+        }
+        //ou vazio
     }
 
     private void soma(Token token){
 
+        mult(token);
+        R_soma(token);
     }
 
     private void R_soma(Token token){
 
+        if(token.equals(TagToken.TKSoma)){
+
+            consome(TagToken.TKSoma);
+            mult(token);
+            R_soma(token);
+
+        }else if(token.equals(TagToken.TKSub)){
+
+            consome(TagToken.TKSub);
+            mult(token);
+            R_soma(token);
+        }
+        //ou vazio
     }
 
     private void mult(Token token){
 
+        uno(token);
+        R_mult(token);
     }
 
     private void R_mult(Token token){
 
+        if(token.equals(TagToken.TKMult)){
+
+            consome(TagToken.TKMult);
+            uno(token);
+            R_mult(token);
+
+        }else if(token.equals(TagToken.TKDiv)){
+
+            consome(TagToken.TKDiv);
+            uno(token);
+            R_mult(token);
+
+        }else if(token.equals(TagToken.TKMod)){
+
+            consome(TagToken.TKMod);
+            uno(token);
+            R_mult(token);
+        }
+        //ou vazio
     }
 
     private void uno(Token token){
 
+        if(token.equals(TagToken.TKSoma)){
+
+            consome(TagToken.TKSoma);
+            uno(token);
+
+        }else if(token.equals(TagToken.TKSub)){
+
+            consome(TagToken.TKSub);
+            uno(token);
+
+        }else if(token.equals(TagToken.TKDiferente)){
+
+            consome(TagToken.TKDiferente);
+            uno(token);
+
+        }else if(token.equals(TagToken.TKPlusPlus)){
+
+            consome(TagToken.TKPlusPlus);
+            uno(token);
+
+        }else if(token.equals(TagToken.TKSubSub)){
+
+            consome(TagToken.TKSubSub);
+            uno(token);
+        }else{
+            pos(token);
+        }
     }
 
     private void pos(Token token){
 
+        if(token.equals(TagToken.TKIdent)){
+            lvalue(token);
+            R_pos(token);
+        }else{
+            valor(token);
+        }
     }
 
     private void R_pos(Token token){
 
+        if(token.equals(TagToken.TKPlusPlus)){
+            consome(TagToken.TKPlusPlus);
+        }else{
+            consome(TagToken.TKSubSub);
+        }
     }
 
     private void valor(Token token){
 
+        if(token.equals(TagToken.TKAbrePar)){
+
+            consome(TagToken.TKAbrePar);
+            exp(token);
+            consome(TagToken.TKFechaPar);
+
+        }else if(token.equals(TagToken.TKnew)){
+
+            consome(TagToken.TKnew);
+            consome(TagToken.TKIdent);
+            consome(TagToken.TKAbrePar);
+            op_arguments(token);
+            consome(TagToken.TKFechaPar);
+
+        }else if(token.equals(TagToken.TKFunc)){
+
+            consome(TagToken.TKFunc);
+            consome(TagToken.TKAbrePar);
+            op_arguments(token);
+            consome(TagToken.TKFechaPar);
+
+        }else if(token.equals(TagToken.TKNumInteiro)){
+
+            consome(TagToken.TKNumInteiro);
+
+        }else if(token.equals(TagToken.TKNumFloat)){
+
+            consome(TagToken.TKNumFloat);
+
+        }else if(token.equals(TagToken.TKString)){
+
+            consome(TagToken.TKString);
+
+        }else if(token.equals(TagToken.TKnil)){
+
+            consome(TagToken.TKnil);
+
+        }else{
+
+            consome(TagToken.TKIdent);
+            R_var_name(token);
+        }
     }
 
     private void R_var_name(Token token){
 
+        if(token.equals(TagToken.TKSeta)){
+
+            consome(TagToken.TKSeta);
+            consome(TagToken.TKFunc);
+            consome(TagToken.TKAbrePar);
+            op_arguments(token);
+            consome(TagToken.TKFechaPar);
+        }else{
+            op_index(token);
+        }
     }
 
     private void op_index(Token token){
 
+        if(token.equals(TagToken.TKAbreCouchete)){
+
+            consome(TagToken.TKAbreCouchete);
+            exp(token);
+            consome(TagToken.TKFechaCouchete);
+        }
+        //ou vazio
     }
 
     private void  consome(TagToken token){
