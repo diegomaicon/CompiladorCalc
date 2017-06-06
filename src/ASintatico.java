@@ -85,6 +85,7 @@ public class ASintatico {
 
         if(token.getIdToken().equals(TagToken.TKIdent)){
             var_name_list(token);
+            consome(TagToken.TKPteVir);
         }
         else if(token.getIdToken().equals(TagToken.TKFunc)){
             consome(TagToken.TKFunc);
@@ -341,7 +342,6 @@ public class ASintatico {
     private void R_exp(Token token){
 
         if(token.getIdToken().equals(TagToken.TKVirgula)){
-
             consome(TagToken.TKVirgula);
             atrib(token);
             R_exp(token);
