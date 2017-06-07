@@ -60,6 +60,7 @@ public class ASintatico {
             consome(TagToken.TK2pto);
             consome(TagToken.TKIdent);
         }
+        //ou vazio
     }
 
     private void member_def_list(Token token){
@@ -73,6 +74,7 @@ public class ASintatico {
         if (token.getIdToken().equals(TagToken.TKstatic) || token.getIdToken().equals(TagToken.TKFunc) || token.getIdToken().equals(TagToken.TKIdent)){
             member_def_list(token);
         }
+        //ou vazio
     }
 
     private void member_def(Token token){
@@ -83,15 +85,14 @@ public class ASintatico {
 
     private void R_member_def(Token token){
 
-        if(token.getIdToken().equals(TagToken.TKIdent)){
-            var_name_list(token);
-            consome(TagToken.TKPteVir);
-        }
-        else if(token.getIdToken().equals(TagToken.TKFunc)){
+        if(token.getIdToken().equals(TagToken.TKFunc)){
             consome(TagToken.TKFunc);
             consome(TagToken.TKAbrePar);
             op_formal_arg_list(token);
             consome(TagToken.TKFechaPar);
+            consome(TagToken.TKPteVir);
+        }else{
+            var_name_list(token);
             consome(TagToken.TKPteVir);
         }
     }
@@ -114,6 +115,7 @@ public class ASintatico {
             consome(TagToken.TKVirgula);
             var_name_list(token);
         }
+        //ou vazio
     }
 
     private void op_vector(Token token){
@@ -122,6 +124,7 @@ public class ASintatico {
             consome(TagToken.TKNumInteiro);
             consome(TagToken.TKFechaCouchete);
         }
+        //ou vazio
     }
 
     private void op_formal_arg_list(Token token){
@@ -129,6 +132,7 @@ public class ASintatico {
         if(token.getIdToken().equals(TagToken.TKIdent)){
             formal_arg_list(token);
         }
+        //ou vazio
     }
 
     private void formal_arg_list(Token token){
@@ -143,6 +147,7 @@ public class ASintatico {
             consome(TagToken.TKVirgula);
             formal_arg_list(token);
         }
+        //ou vazio
     }
 
     private void function_def(Token token){
@@ -163,6 +168,7 @@ public class ASintatico {
             consome(TagToken.TKIdent);
             consome(TagToken.TK4tpo);
         }
+        //ou vazio
     }
 
     private void op_parameters(Token token){
@@ -177,6 +183,7 @@ public class ASintatico {
             consome(TagToken.TKPteVir);
             temp_list(token);
         }
+        //ou vazio
     }
 
     private void temp_list(Token token){
@@ -205,6 +212,7 @@ public class ASintatico {
             statement(token);
             statement_list(token);
         }
+        //ou vazio
 
     }
 
@@ -271,10 +279,7 @@ public class ASintatico {
             consome(TagToken.TKreturn);
             op_expression(token);
 
-        }else if(token.getIdToken().equals(TagToken.TKSoma) || token.getIdToken().equals(TagToken.TKSub) || token.getIdToken().equals(TagToken.TKNegacao) || token.getIdToken().equals(TagToken.TKPlusPlus)
-                || token.getIdToken().equals(TagToken.TKSubSub) || token.getIdToken().equals(TagToken.TKIdent) || token.getIdToken().equals(TagToken.TKAbrePar) || token.getIdToken().equals(TagToken.TKnew)
-                || token.getIdToken().equals(TagToken.TKFunc) || token.getIdToken().equals(TagToken.TKNumInteiro) || token.getIdToken().equals(TagToken.TKNumFloat) || token.getIdToken().equals(TagToken.TKString)
-                || token.getIdToken().equals(TagToken.TKnil)) {
+        }else{
 
             op_expression(token);
             consome(TagToken.TKPteVir);
@@ -363,6 +368,7 @@ public class ASintatico {
             or(token);
             R_atrib(token);
         }
+        //ou vazio
     }
 
     private void or(Token token){
@@ -407,9 +413,9 @@ public class ASintatico {
 
     private void R_rel(Token token){
 
-        if(token.getIdToken().equals(TagToken.TKAtrib)){
+        if(token.getIdToken().equals(TagToken.TKIgualIgual)){
 
-            consome(TagToken.TKAtrib);
+            consome(TagToken.TKIgualIgual);
             soma(token);
 
         }else if(token.getIdToken().equals(TagToken.TKDiferente)){
