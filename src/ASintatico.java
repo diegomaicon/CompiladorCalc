@@ -13,7 +13,7 @@ public class ASintatico {
 
     public void start(){
         try {
-            lexico.abreArquivo("teste.calc");
+            lexico.abreArquivo("fatorial.calc");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -527,15 +527,15 @@ public class ASintatico {
             pos(this.t);
         }
     }
-
+    //Problema não sabe pra onde ir
     private void pos(Token token){
 
-        if(token.getIdToken().equals(TagToken.TKIdent)){
-            lvalue(this.t);
-            R_pos(this.t);
-        }else{
+//        if(token.getIdToken().equals(TagToken.TKIdent)){
+  //         lvalue(this.t);
+    //        R_pos(this.t);
+      //  }else{
             valor(this.t);
-        }
+        //}
     }
 
     private void R_pos(Token token){
