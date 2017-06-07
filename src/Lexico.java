@@ -138,7 +138,7 @@ public class Lexico {
                     break;
 
                 case 2:
-                    if (Character.isLetter(aux) || Character.isDigit(aux)) {
+                    if (Character.isLetter(aux) || Character.isDigit(aux) || aux.equals('_')) {
                         estado = 2;
                         sb.append(aux);
                     } else{
@@ -190,7 +190,7 @@ public class Lexico {
                             token = new Token(TagToken.TKprint, sb.toString(), linha, pRead );
                             return token;
                         case "THIS":
-                            token = new Token(TagToken.TKthis, sb.toString(), linha, pRead - 1);
+                            token = new Token(TagToken.TKthis, sb.toString(), linha, pRead);
                             return token;
                         default:
                             if(aux.equals('(')){

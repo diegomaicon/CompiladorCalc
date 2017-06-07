@@ -523,6 +523,7 @@ public class ASintatico {
 
             consome(TagToken.TKSubSub);
             uno(this.t);
+
         }else{
             pos(this.t);
         }
@@ -584,6 +585,10 @@ public class ASintatico {
 
         }else if(token.getIdToken().equals(TagToken.TKnil)){
             consome(TagToken.TKnil);
+
+        }else if(token.getIdToken().equals(TagToken.TKthis)){
+            consome(TagToken.TKthis);
+
         }else{
 
             consome(TagToken.TKIdent);
