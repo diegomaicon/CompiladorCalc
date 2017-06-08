@@ -11,9 +11,9 @@ public class ASintatico {
     private Token t = new Token();
 
 
-    public void start(){
+    public void start(String codigo){
         try {
-            lexico.abreArquivo("teste.calc");
+            lexico.abreArquivo(codigo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,11 +137,14 @@ public class ASintatico {
     }
 
     private void formal_arg_list(Token token){
-
-        consome(TagToken.TKIdent);
-        R_formal_arg_list(this.t);
+        if (token.getIdToken().equals(TagToken.TKIdent)){
+            consome(TagToken.TKIdent);
+            R_formal_arg_list(this.t);
+        } else if (token.getIdToken().equals(TagToken.TKPteVir)){
+            consome(TagToken.TKPteVir);
+            formal_arg_list(this.t);
+        }
     }
-
     private void R_formal_arg_list(Token token){
 
         if(token.getIdToken().equals(TagToken.TKVirgula)){
@@ -204,7 +207,7 @@ public class ASintatico {
     private void statement_list(Token token){
 
         if(token.getIdToken().equals(TagToken.TKif) || token.getIdToken().equals(TagToken.TKwhile) || token.getIdToken().equals(TagToken.TKdo) || token.getIdToken().equals(TagToken.TKPteVir) ||
-                token.getIdToken().equals(TagToken.TKAbreChav) || token.getIdToken().equals(TagToken.TKfor) || token.getIdToken().equals(TagToken.TKbreak) || token.getIdToken().equals(TagToken.TKcontinue) ||
+                token.getIdToken().equals(TagToken.TKAbreChav) || token.getIdToken().equals(TagToken.TKfor) || token.getIdToken().equals(TagToken.TKprint) || token.getIdToken().equals(TagToken.TKbreak) || token.getIdToken().equals(TagToken.TKcontinue) ||
                 token.getIdToken().equals(TagToken.TKreturn) || token.getIdToken().equals(TagToken.TKSoma) || token.getIdToken().equals(TagToken.TKSub) || token.getIdToken().equals(TagToken.TKDiferente) ||
                 token.getIdToken().equals(TagToken.TKPlusPlus) || token.getIdToken().equals(TagToken.TKSubSub) || token.getIdToken().equals(TagToken.TKIdent) || token.getIdToken().equals(TagToken.TKAbrePar) ||
                 token.getIdToken().equals(TagToken.TKnew) || token.getIdToken().equals(TagToken.TKFunc) || token.getIdToken().equals(TagToken.TKNumInteiro) || token.getIdToken().equals(TagToken.TKNumFloat) ||
@@ -265,6 +268,12 @@ public class ASintatico {
             consome(TagToken.TKFechaPar);
             statement(this.t);
 
+        }else if(token.getIdToken().equals(TagToken.TKprint)) {
+            consome(TagToken.TKprint);
+            consome(TagToken.TKAbrePar);
+            exp(this.t);
+            consome(TagToken.TKFechaPar);
+
         }else if(token.getIdToken().equals(TagToken.TKbreak)) {
 
             consome(TagToken.TKbreak);
@@ -311,18 +320,21 @@ public class ASintatico {
     }
 
     private void op_arguments(Token token){
-
-        if(token.getIdToken().equals(TagToken.TKIdent)){
-
-            arg_list(this.t);
-        }
+        arg_list(this.t);
         //ou vazio
     }
 
-    private void arg_list(Token token){
-
-        consome(TagToken.TKIdent);
-        R_arg_list(this.t);
+    private void arg_list(Token token) {
+        if (token.getIdToken().equals(TagToken.TKIdent)) {
+            consome(TagToken.TKIdent);
+            R_arg_list(this.t);
+        } else if (token.getIdToken().equals(TagToken.TKPteVir)){
+            consome(TagToken.TKPteVir);
+            R_arg_list(this.t);
+        } else {
+            valor(this.t);
+            R_arg_list(this.t);
+        }
     }
 
     private void R_arg_list(Token token){
@@ -533,11 +545,11 @@ public class ASintatico {
     //Problema não sabe pra onde ir
     private void pos(Token token){
 
-    //if(token.getIdToken().equals(TagToken.TKIdent)){
-           // lvalue(this.t);
-          // R_pos(this.t);
+        //if(token.getIdToken().equals(TagToken.TKIdent)){
+        // lvalue(this.t);
+        // R_pos(this.t);
         //}else{
-            valor(this.t);
+        valor(this.t);
         //}
     }
 
@@ -561,7 +573,7 @@ public class ASintatico {
         }else if(token.getIdToken().equals(TagToken.TKnew)){
 
             consome(TagToken.TKnew);
-            consome(TagToken.TKIdent);
+            consome(TagToken.TKFunc);
             consome(TagToken.TKAbrePar);
             op_arguments(this.t);
             consome(TagToken.TKFechaPar);
@@ -590,8 +602,11 @@ public class ASintatico {
 
         }else if(token.getIdToken().equals(TagToken.TKthis)){
             consome(TagToken.TKthis);
-        }else{
+
+        }else if(token.getIdToken().equals(TagToken.TKIdent)){
             consome(TagToken.TKIdent);
+            R_var_name(this.t);
+        } else{
             R_var_name(this.t);
         }
     }
@@ -631,7 +646,7 @@ public class ASintatico {
         }//
 
         if (this.t == null){
-            System.out.println("Sintaxe está ok !!!");
+            System.out.println("\n Sintaxe está ok !!!");
             System.exit(0);
         }
     }

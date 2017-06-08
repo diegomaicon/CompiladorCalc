@@ -11,7 +11,7 @@ public class Index{
         public static void main(String[] args) throws IOException {
 
                 ASintatico a = new ASintatico();
-                a.start();
+                a.start("fatorial.calc");
 
         }
 }
