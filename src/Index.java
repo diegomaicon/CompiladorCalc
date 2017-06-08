@@ -7,11 +7,9 @@ import java.io.IOException;
 
 public class Index{
 
-
         public static void main(String[] args) throws IOException {
 
                 ASintatico a = new ASintatico();
                 a.start("fatorial.calc");
-
         }
 }

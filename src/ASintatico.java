@@ -542,6 +542,7 @@ public class ASintatico {
             pos(this.t);
         }
     }
+
     //Problema não sabe pra onde ir
     private void pos(Token token){
 
