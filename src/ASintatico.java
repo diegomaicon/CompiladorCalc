@@ -583,6 +583,7 @@ public class ASintatico {
         }else if ( token.getIdToken().equals(TagToken.TKAbreCouchete) || token.getIdToken().equals(TagToken.TKPlusPlus) || token.getIdToken().equals(TagToken.TKSubSub)){
             ini_vector(this.t);
         }
+        //ou vazio
     }
 
     private void R_ini_vector(Token token){

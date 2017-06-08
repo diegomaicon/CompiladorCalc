@@ -1,5 +1,4 @@
 class incremento{
-    //a++;
     topo;
     push(x);
     pop();

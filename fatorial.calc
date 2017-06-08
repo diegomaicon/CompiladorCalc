@@ -8,6 +8,7 @@ class foo{
 foo::foo(aa,bb){
     a = aa;
     b = bb;
+    a++;
     last = this;
     return this;
 }
