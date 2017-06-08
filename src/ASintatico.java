@@ -39,6 +39,7 @@ public class ASintatico {
     }
 
     private void R_definitions_list(Token token){
+
         if(token.getIdToken().equals(TagToken.TKclass) || token.getIdToken().equals(TagToken.TKFunc) || token.getIdToken().equals(TagToken.TKIdent)){
             definitions_list(this.t);
         }
@@ -103,6 +104,7 @@ public class ASintatico {
         if(token.getIdToken().equals(TagToken.TKstatic)){
             consome(TagToken.TKstatic);
         }
+        //ou vazio
     }
 
     private void var_name_list(Token token){
@@ -112,6 +114,7 @@ public class ASintatico {
     }
 
     private void R_var_name_list(Token token){
+
         if(token.getIdToken().equals(TagToken.TKVirgula)){
             consome(TagToken.TKVirgula);
             var_name_list(this.t);
@@ -120,6 +123,7 @@ public class ASintatico {
     }
 
     private void op_vector(Token token){
+
         if(token.getIdToken().equals(TagToken.TKAbreCouchete)){
             consome(TagToken.TKAbreCouchete);
             consome(TagToken.TKNumInteiro);
@@ -131,20 +135,23 @@ public class ASintatico {
     private void op_formal_arg_list(Token token){
 
         if(token.getIdToken().equals(TagToken.TKIdent)){
+
             formal_arg_list(this.t);
         }
         //ou vazio
     }
 
     private void formal_arg_list(Token token){
+
         if (token.getIdToken().equals(TagToken.TKIdent)){
             consome(TagToken.TKIdent);
             R_formal_arg_list(this.t);
-        } else if (token.getIdToken().equals(TagToken.TKPteVir)){
+        } else{
             consome(TagToken.TKPteVir);
             formal_arg_list(this.t);
         }
     }
+
     private void R_formal_arg_list(Token token){
 
         if(token.getIdToken().equals(TagToken.TKVirgula)){
@@ -169,6 +176,7 @@ public class ASintatico {
     private void op_class_owner(Token token){
 
         if(token.getIdToken().equals(TagToken.TKIdent)){
+
             consome(TagToken.TKIdent);
             consome(TagToken.TK4tpo);
         }
@@ -202,6 +210,7 @@ public class ASintatico {
             consome(TagToken.TKVirgula);
             temp_list(this.t);
         }
+        //ou vazio
     }
 
     private void statement_list(Token token){
@@ -292,6 +301,7 @@ public class ASintatico {
         }else if(token.getIdToken().equals(TagToken.TKPteVir)) {
             consome(TagToken.TKPteVir);
         }else{
+
             op_expression(this.t);
             consome(TagToken.TKPteVir);
         }
@@ -531,27 +541,16 @@ public class ASintatico {
         }else if(token.getIdToken().equals(TagToken.TKPlusPlus)){
 
             consome(TagToken.TKPlusPlus);
-            uno(this.t);
+            lvalue(this.t);
 
         }else if(token.getIdToken().equals(TagToken.TKSubSub)){
 
             consome(TagToken.TKSubSub);
-            uno(this.t);
+            lvalue(this.t);
 
         }else{
             pos(this.t);
         }
-    }
-
-    //Problema não sabe pra onde ir
-    private void pos(Token token){
-
-        //if(token.getIdToken().equals(TagToken.TKIdent)){
-        // lvalue(this.t);
-        // R_pos(this.t);
-        //}else{
-        valor(this.t);
-        //}
     }
 
     private void R_pos(Token token){
@@ -560,6 +559,37 @@ public class ASintatico {
             consome(TagToken.TKPlusPlus);
         }else{
             consome(TagToken.TKSubSub);
+        }
+    }
+
+    private void pos(Token token){
+
+        if(token.getIdToken().equals(TagToken.TKIdent)){
+            consome(TagToken.TKIdent);
+            pos_pos(this.t);
+        }else{
+            valor(this.t);
+        }
+    }
+
+    private void pos_pos(Token token){
+
+        if(token.getIdToken().equals(TagToken.TKSeta)){
+            R_var_name(this.t);
+        }else if ( token.getIdToken().equals(TagToken.TKAbreCouchete) || token.getIdToken().equals(TagToken.TKPlusPlus) || token.getIdToken().equals(TagToken.TKSubSub)){
+            ini_vector(this.t);
+        }
+    }
+
+    private void R_ini_vector(Token token){
+
+        if(token.getIdToken().equals(TagToken.TKNumInteiro)){
+            consome(TagToken.TKNumInteiro);
+            consome(TagToken.TKFechaCouchete);
+            R_pos(this.t);
+        }else{
+            exp(this.t);
+            consome(TagToken.TKFechaCouchete);
         }
     }
 
@@ -604,37 +634,28 @@ public class ASintatico {
         }else if(token.getIdToken().equals(TagToken.TKthis)){
             consome(TagToken.TKthis);
 
-        }else if(token.getIdToken().equals(TagToken.TKIdent)){
-            consome(TagToken.TKIdent);
-            R_var_name(this.t);
-        } else{
+        }else if(token.getIdToken().equals(TagToken.TKSeta)){
             R_var_name(this.t);
         }
     }
 
     private void R_var_name(Token token){
 
-        if(token.getIdToken().equals(TagToken.TKSeta)){
-
-            consome(TagToken.TKSeta);
-            consome(TagToken.TKFunc);
-            consome(TagToken.TKAbrePar);
-            op_arguments(this.t);
-            consome(TagToken.TKFechaPar);
-        }else{
-            op_index(this.t);
-        }
+        consome(TagToken.TKSeta);
+        consome(TagToken.TKFunc);
+        consome(TagToken.TKAbrePar);
+        op_arguments(this.t);
+        consome(TagToken.TKFechaPar);
     }
 
-    private void op_index(Token token){
+    private void ini_vector(Token token){
 
         if(token.getIdToken().equals(TagToken.TKAbreCouchete)){
-
             consome(TagToken.TKAbreCouchete);
-            exp(this.t);
-            consome(TagToken.TKFechaCouchete);
+            R_ini_vector(this.t);
+        }else{
+            R_pos(this.t);
         }
-        //ou vazio
     }
 
     private void  consome(TagToken token){

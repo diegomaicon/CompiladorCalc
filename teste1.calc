@@ -1,11 +1,20 @@
-class Pilha{
-    topo;
-    push(x);
-    pop();
-    empty;
+foo::get_a(){
+    print(" teste \n");   // pedir ao primeiro para contar
+	return a;
+}
+foo :: set_a(aa){
+	A = aa;
 }
 
-Pilha::Pilha(){
-    topo = nil;
-    return this;
+foo::count(; i){
+	for(i = a; i <= b; i++){
+		print(i, "\ n");
+	}
+main(;foo1, foo2){
+	Foo1 = new foo(1, 2);             // cria um objeto de classe foo
+	Foo2 = new foo(11, 22);           // e outro
+	print(" contagem de tolos \n");   // pedir ao primeiro para contar
+	Foo1 -> count();
+	print ("contagem de foo2 \n");    // pedir ao segundo para contar
+	Foo2 -> count();
 }

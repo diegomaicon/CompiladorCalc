@@ -1,4 +1,5 @@
 class foo{
+
     a,b;
     static last;
     static get_last();
