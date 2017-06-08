@@ -330,7 +330,11 @@ public class ASintatico {
     }
 
     private void op_arguments(Token token){
-        arg_list(this.t);
+
+        if(token.getIdToken().equals(TagToken.TKIdent) || token.getIdToken().equals(TagToken.TKPteVir) || token.getIdToken().equals(TagToken.TKAbrePar) || token.getIdToken().equals(TagToken.TKnew) || token.getIdToken().equals(TagToken.TKFunc) || token.getIdToken().equals(TagToken.TKNumInteiro) || token.getIdToken().equals(TagToken.TKNumFloat) || token.getIdToken().equals(TagToken.TKString) || token.getIdToken().equals(TagToken.TKnil)){
+            arg_list(this.t);
+        }
+
         //ou vazio
     }
 
