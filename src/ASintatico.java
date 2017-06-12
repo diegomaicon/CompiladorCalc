@@ -616,10 +616,7 @@ public class ASintatico {
 
         }else if(token.getIdToken().equals(TagToken.TKFunc)){
 
-            consome(TagToken.TKFunc);
-            consome(TagToken.TKAbrePar);
-            op_arguments(this.t);
-            consome(TagToken.TKFechaPar);
+           function_def(this.t);
 
         }else if(token.getIdToken().equals(TagToken.TKNumInteiro)){
 
