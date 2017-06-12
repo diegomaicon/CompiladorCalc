@@ -4,7 +4,7 @@ import javax.swing.text.html.HTML;
 import java.io.IOException;
 
 /**
- * Created by Diego on 05/04/2017.
+ * Created by Diego e Ronan on 05/04/2017.
  */
 public class ASintatico {
     private Lexico lexico = new Lexico();
