@@ -3,15 +3,16 @@ foo::get_a(){
 	return a;
 }
 foo :: set_a(aa){
-	A = aa;
+	A + 2 = aa;
 }
 
 foo::count(; i){
 	for(i = a; i <= b; ++i){
 		print(i, "\ n");
 	}
-main(;foo1 , foo2){
-	Foo1 = new foo(1, 2);             // cria um objeto de classe foo
+}
+main( ;foo1 , foo2){
+	Foo1 = new foo(1,4);             // cria um objeto de classe foo
 	Foo2 = new foo(11, 22);           // e outro
 	print(" contagem de tolos \n");   // pedir ao primeiro para contar
 	Foo1 -> count();
