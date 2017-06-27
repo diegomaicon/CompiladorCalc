@@ -7,12 +7,9 @@ public class Token {
     private String lexema;
     private int linha;
     private int pRead;
-    //private ArrayList<> inf;
 
     public Token(){
     }
-
-
 
     public Token(TagToken idToken, String lexema, int linha, int pRead) {
         this.idToken = idToken;

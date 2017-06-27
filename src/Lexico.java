@@ -1,5 +1,5 @@
 /**
- * Created by Diego on 27/03/2017.
+ * Created by Diego and Ronan on 27/03/2017.
  */
 
 import java.io.BufferedReader;
@@ -11,10 +11,14 @@ public class Lexico {
     private Token token;
     private String codigo;
 
-
     public Lexico() {
     }
 
+    /**
+     * Abre aquivo e carrega no Buffer (memória)
+     * @param caminho
+     * @throws IOException
+     */
     public void abreArquivo(String caminho) throws IOException {
         String x = "";
         try {
@@ -37,6 +41,11 @@ public class Lexico {
         }
     }
 
+    /**
+     * Busca próximo Token, apartir da  posição informada
+     * @param token
+     * @return
+     */
     public Token getToken(Token token) {
 
         if (token.getpRead() != -1) {
@@ -49,8 +58,14 @@ public class Lexico {
         return null;
     }
 
+    /**
+     * Monta o token e retorna apartir da pRead e da linha
+     *
+     * @param pRead
+     * @param linha
+     * @return
+     */
     private Token Lex(int pRead, int linha) {
-
         StringBuilder sb = new StringBuilder();
         int estado = 1;
         Character aux = ' ';
@@ -59,6 +74,7 @@ public class Lexico {
                 aux = this.codigo.charAt(pRead);
             }
             switch (estado) {
+                // Verifica qual promeiro caracter e começa a montar o token
                 case 1:
                     if (aux.equals(' ')){
                         estado = 1;
@@ -136,7 +152,7 @@ public class Lexico {
                         linha++;
                     }
                     break;
-
+                //Caso seja identificador
                 case 2:
                     if (Character.isLetter(aux) || Character.isDigit(aux) || aux.equals('_')) {
                         estado = 2;
@@ -202,7 +218,7 @@ public class Lexico {
                             }
                     }
 
-
+                //Atribuição ou Igual Igual
                 case 4:
                     if (aux.equals('=')) {
                         sb.append(aux);
@@ -212,7 +228,7 @@ public class Lexico {
                         token = new Token(TagToken.TKAtrib, sb.toString(), linha, pRead);
                         return token;
                     }
-
+                //Multiplicação e Atribuição ou Multiplicação
                 case 5:
                     if (aux.equals('=')) {
                         sb.append(aux);
@@ -222,7 +238,7 @@ public class Lexico {
                         token = new Token(TagToken.TKMult, sb.toString(), linha, pRead);
                         return token;
                     }
-
+                // Divisão
                 case 6:
                     if (aux.equals('*') || aux.equals('/')) {
                         estado = 50;     //Consome comentários
@@ -288,8 +304,8 @@ public class Lexico {
                         return token;
                     }
                     break;
-                case 12: //Pega numero Float
-
+                //Pega número Float
+                case 12:
                     if (Character.isDigit(aux) || aux.equals('E') || aux.equals('e') || aux.equals('+') || aux.equals('-')) {
                         estado = 12;
                         sb.append(aux);
@@ -355,7 +371,7 @@ public class Lexico {
                         token = new Token(TagToken.TKMaior, sb.toString(), linha, pRead);
                         return token;
                     }
-
+                //Pega  (<= ou < )
                 case 24:
                     if (aux.equals('=')) {
                         sb.append(aux);
@@ -365,12 +381,14 @@ public class Lexico {
                         token = new Token(TagToken.TKMenor, sb.toString(), linha, pRead);
                         return token;
                     }
+                //pega '&'
                 case 25:
                     if (aux.equals('&')) {
                         sb.append(aux);
                         token = new Token(TagToken.TKAnd, sb.toString(), linha, pRead+1);
                         return token;
                     }
+                //pega '|'
                 case 26:
                     if (aux.equals('|')) {
                         sb.append(aux);
@@ -430,6 +448,7 @@ public class Lexico {
                     token = new Token(TagToken.TKNull, sb.toString(), linha, -1);
                     return token;
             }
+            //incrementa proxima posição.
             pRead++;
         }
 

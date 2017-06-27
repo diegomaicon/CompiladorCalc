@@ -1,5 +1,5 @@
 /**
- * Created by Diego on 17/04/2017.
+ * Created by Diego and Ronan on 17/04/2017.
  */
 public enum TagToken {
     //separadores e operadores

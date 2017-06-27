@@ -10,9 +10,13 @@ public class ASintatico {
     private Lexico lexico = new Lexico();
     private Token t = new Token();
 
-
+    /**
+     *  Inicia analisador sintático
+     * @param codigo
+     */
     public void start(String codigo){
         try {
+            //Passa codigo Fonte para Lexico
             lexico.abreArquivo(codigo);
         } catch (IOException e) {
             e.printStackTrace();
@@ -693,6 +697,10 @@ public class ASintatico {
         }
     }
 
+    /**
+     *  Consome Toke e busca o proximo.
+     * @param token
+     */
     private void  consome(TagToken token){
 
         if (this.t.getIdToken().equals(token)){
